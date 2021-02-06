@@ -116,9 +116,13 @@ function chooseCash(e) {
 
       arrayDates.forEach(date => {
         const dateWrapper = document.createElement("div");
+        dateWrapper.classList.add("chosen-cash__date");
 
         const dateValueSpan = document.createElement("span");
+        dateValueSpan.classList.add("chosen-cash__date-value");
+
         const cashValueSpan = document.createElement("span");
+        cashValueSpan.classList.add("chosen-cash__date-rate");
 
         //get value of rate in the certain date by using cashCode
         const cashValue = date[1][cashCode];

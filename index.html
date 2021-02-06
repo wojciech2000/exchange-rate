@@ -5,13 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Condensed:wght@700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
     <title>Exchange Rate</title>
   </head>
   <body>
     <div class="container">
       <section class="choose-cash">
-        <h2>Wybierz walutę (kurs dla 1PLN)</h2>
+        <h2 class="choose-cash__title">Wybierz walutę (kurs dla 1PLN)</h2>
         <div class="choose-chash__search">
           <input type="text" class="choose-chash__input" placeholder="Kod waluty..." />
           <div class="choose-cash__cash"></div>
@@ -19,9 +25,9 @@
       </section>
 
       <section class="chosen-cash">
-        <h2>
+        <h2 class="chosen-cash__title">
           Kursy od dnia dzisiejszego do poniedziałku ubiegłego tygodnia dla:
-          <span class="chosen-chash__code"></span>
+          <span class="chosen-chash__code">...</span>
         </h2>
         <div class="chosen-cash__dates"></div>
       </section>
