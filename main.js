@@ -1,19 +1,19 @@
 //input search functionality
-const searchInput = document.querySelector(".choose-chash__input");
-let allCash = [];
+var searchInput = document.querySelector(".choose-chash__input");
+var allCash = [];
 
 searchInput.addEventListener("input", e => {
-  const chashCodesWrapper = document.querySelector(".choose-cash__cash");
-  const toLowerCaseValue = e.target.value.toLowerCase();
+  var chashCodesWrapper = document.querySelector(".choose-cash__cash");
+  var toLowerCaseValue = e.target.value.toLowerCase();
 
-  const matchedCodes = allCash.filter(code =>
+  var matchedCodes = allCash.filter(code =>
     code.dataset["code"].toLowerCase().includes(toLowerCaseValue),
   );
 
   //remove all data
   chashCodesWrapper.innerHTML = "";
 
-  //create new data
+  //display matched codes
   matchedCodes.forEach(match => {
     chashCodesWrapper.appendChild(match);
   });
@@ -23,17 +23,17 @@ document.addEventListener("DOMContentLoaded", () => {
   axios
     .get("https://api.exchangeratesapi.io/latest?base=PLN")
     .then(res => {
-      const allCashashWrapper = document.querySelector(".choose-cash__cash");
+      var allCashashWrapper = document.querySelector(".choose-cash__cash");
 
       //change object to array so it can be  iterable
-      const arrayRates = Object.entries(res.data.rates);
+      var arrayRates = Object.entries(res.data.rates);
 
       arrayRates.forEach(rate => {
         if (rate[0] !== "PLN") {
           //array of single element looks like this: [property, value], in this case: [cashcode, rate value]
-          const singleCashWrapper = document.createElement("div");
-          const codeValueSpan = document.createElement("span");
-          const rateValueSpan = document.createElement("span");
+          var singleCashWrapper = document.createElement("div");
+          var codeValueSpan = document.createElement("span");
+          var rateValueSpan = document.createElement("span");
 
           codeValueSpan.textContent = rate[0] + ": ";
           rateValueSpan.textContent = rate[1].toFixed(2);
@@ -56,8 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function chooseCash(e) {
-  const cashCode = e.currentTarget.dataset["code"];
-  const chosenTitle = document.querySelector(".chosen-chash__code");
+  var cashCode = e.currentTarget.dataset["code"];
+  var chosenTitle = document.querySelector(".chosen-chash__code");
 
   //prevent from fetching same data
   if (cashCode === chosenTitle.textContent) return;
@@ -81,8 +81,8 @@ function chooseCash(e) {
 
   //previous monday
   function prevoiusMonday() {
-    const prevMonday = new Date();
-    const day = prevMonday.getDay();
+    var prevMonday = new Date();
+    var day = prevMonday.getDay();
 
     if (prevMonday.getDay() === 0) {
       //if day is a sunday
@@ -93,44 +93,45 @@ function chooseCash(e) {
     }
 
     return {
-      prevMondayYear: prevMonday.getFullYear(),
-      prevMondayMonth: setMonth(prevMonday.getMonth()),
-      prevMondayDay: setDay(prevMonday.getDate()),
+      year: prevMonday.getFullYear(),
+      month: setMonth(prevMonday.getMonth()),
+      day: setDay(prevMonday.getDate()),
     };
   }
-  const {prevMondayYear, prevMondayMonth, prevMondayDay} = prevoiusMonday();
+  var prevoiusMonday = prevoiusMonday();
 
   //current date
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = setMonth(date.getMonth());
-  const day = setDay(date.getDate());
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = setMonth(date.getMonth());
+  var day = setDay(date.getDate());
 
-  const getRatesFromTodayToPreviousMonday = `https://api.exchangeratesapi.io/history?start_at=${prevMondayYear}-${prevMondayMonth}-${prevMondayDay}&end_at=${year}-${month}-${day}&base=PLN&symbols=${cashCode}`;
+  var getRatesFromTodayToPreviousMonday = `https://api.exchangeratesapi.io/history?start_at=${prevoiusMonday.year}-${prevoiusMonday.month}-${prevoiusMonday.day}&end_at=${year}-${month}-${day}&base=PLN&symbols=${cashCode}`;
 
   axios
     .get(getRatesFromTodayToPreviousMonday)
     .then(res => {
-      const dates = res.data.rates;
-      const arrayDates = Object.entries(dates);
+      var dates = res.data.rates;
+      var arrayDates = Object.entries(dates);
 
-      const datesWrapper = document.querySelector(".chosen-cash__dates");
-      //replace dates to new ones
-      datesWrapper.firstChild && (datesWrapper.innerHTML = "");
+      var datesWrapper = document.querySelector(".chosen-cash__dates");
 
-      //create all dates
+      //remove previous rates
+      datesWrapper.innerHTML = "";
+
+      //create all rates
       arrayDates.forEach(date => {
-        const singleDateWrapper = document.createElement("div");
+        var singleDateWrapper = document.createElement("div");
         singleDateWrapper.classList.add("chosen-cash__date");
 
-        const dateValueSpan = document.createElement("span");
+        var dateValueSpan = document.createElement("span");
         dateValueSpan.classList.add("chosen-cash__date-value");
 
-        const rateValueSpan = document.createElement("span");
+        var rateValueSpan = document.createElement("span");
         rateValueSpan.classList.add("chosen-cash__date-rate");
 
-        //get value of rate in the certain date by using cashCode
-        const cashValue = date[1][cashCode];
+        //get value of a rate in the certain date by using cashCode
+        var cashValue = date[1][cashCode];
 
         dateValueSpan.textContent = date[0] + ": ";
         rateValueSpan.textContent = cashValue;
