@@ -84,15 +84,12 @@ function chooseCash(e) {
     const prevMonday = new Date();
     const day = prevMonday.getDay();
 
-    if (prevMonday.getDay() === 1) {
-      //if day is a monday
-      prevMonday.setDate(prevMonday.getDate() - 7);
-    } else if (prevMonday.getDay() === 0) {
+    if (prevMonday.getDay() === 0) {
       //if day is a sunday
-      prevMonday.setDate(prevMonday.getDate() - 6);
+      prevMonday.setDate(prevMonday.getDate() - 13);
     } else {
       //other days
-      prevMonday.setDate(prevMonday.getDate() - (day - 1));
+      prevMonday.setDate(prevMonday.getDate() - day - 6);
     }
 
     return {
@@ -102,8 +99,6 @@ function chooseCash(e) {
     };
   }
   const {prevMondayYear, prevMondayMonth, prevMondayDay} = prevoiusMonday();
-
-  console.log(prevMondayYear, prevMondayMonth, prevMondayDay);
 
   //current date
   const date = new Date();
